@@ -32,7 +32,7 @@ function gridGeneration(size) {
         cell.style.width = `${100/size}%`;
         cell.style.height = `${100/size}%`; //Adjust as needed
         cell.style.boxSizing = "border-box";
-        cell.style.border = "1px solid black";
+        cell.style.border = "1px solid none";
         cell.style.margin = "0";
         container.appendChild(cell);
     }
@@ -66,7 +66,8 @@ function createGrid(size) {
     //Enable Paint Trail
     const paintButton = document.querySelector('#paint-button');
     const paintEnabledText = document.querySelector('enable-text');
-    function paint() {
+
+    function paintTrail() {
         cells.forEach(cell => {
             cell.addEventListener('mouseout', () => {
                 isMouseOver = false;
@@ -74,12 +75,10 @@ function createGrid(size) {
                     if (!isMouseOver) { //Only change color if mouse is still out
                         cell.style.backgroundColor = 'white';
                     }
-                }, 1000); // 1000 milliseconds = 1 second
+                }, 5000); // 1000 milliseconds = 1 second
             });
         });
     };
-
-
 
 
     //Play Game
@@ -88,13 +87,11 @@ function createGrid(size) {
     function playSketch(color) {
         cells.forEach(cell => {
             let isMouseOver = false; //Track mouseover state
-
             cell.addEventListener('mouseover', () => {
                 isMouseOver = true;
                 cell.style.backgroundColor = color; // Change to the desired color
             });
-
-            paint();
+            // paintTrail();
         });
     }
 
@@ -112,13 +109,11 @@ function createGrid(size) {
             let color = colors[colorIndex];
 
             let isMouseOver = false; //Track mouseover state
-            
             cell.addEventListener('mouseover', () => {
                 isMouseOver = true;
                 cell.style.backgroundColor = color; // Change to the desired color
             });
-
-            paint();
+            // paintTrail();
 
             // paintButton.addEventListener('click', function() {
             //     paint();
@@ -134,8 +129,6 @@ function createGrid(size) {
             cell.style.backgroundColor = 'white';
         })
     });
-
-
 
 };
 
