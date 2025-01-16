@@ -64,35 +64,6 @@ colorOptions.forEach(colorOption => {
         playSketch(color);
         console.log(`Color ${color} has been selected!`);
     });
-
-    // document.body.addEventListener('wheel', (event) => {
-    //     event.preventDefault(); //Prevent page scrolling
-
-    //     const targetElement = event.target; //Get the element that triggered the event
-
-    //     if (targetElement.classList.contains('color-select')) {
-    //         const colorIndex = Array.prototype.indexOf.call(colorOptions, currentColor);
-
-    //         if (event.deltaY > 0) {
-    //             //Scroll down selects the next color
-    //             const nextIndex = (colorIndex + 1) % colorOptions.length;
-    //             selectColor(colorOptions[nextIndex]);
-    //         } else {
-    //             //Scroll up selects the previous color
-    //             const prevIndex = (colorIndex - 1 + colorOptions.length) % colorOptions.length;
-    //             selectColor(colorOptions[prevIndex]);
-    //         }
-    //     }
-
-    //     function selectColor(newColorElement) {
-    //         const newColor = newColorElement;
-    //         const color = newColor.dataset.color;
-
-    //         playSketch(color);
-    //         console.log(`Color ${color} has been selected!`);
-    //     }
-        
-    // });
 });
 
 
@@ -124,14 +95,30 @@ function playSketch(color) {
 //Play Rainbow
 const colorRainbow = document.querySelector('#color-rainbow');
 colorRainbow.addEventListener('click', function() {
-    const colors = ['red', 'orange', 'yellow', 'green', 'blue', 'purple', 'pink', 'brown', 'gray', 'black'];
-    let colorIndex = Math.floor(Math.random() * colors.length);
-    let color = colors[colorIndex];
-
-    playSketch(color);
-    console.log(`RAINBOW SELECTED. Color played: ${color}`);
+    playRainbow();
 });
 
 function playRainbow() {
-    
+    cells.forEach(cell => {
+        const colors = ['red', 'orange', 'yellow', 'green', 'blue', 'purple', 'pink', 'brown', 'gray', 'black'];
+        let colorIndex = Math.floor(Math.random() * colors.length);
+        let color = colors[colorIndex];
+
+        let isMouseOver = false; //Track mouseover state
+        
+        cell.addEventListener('mouseover', () => {
+            isMouseOver = true;
+            cell.style.backgroundColor = color; // Change to the desired color
+        });
+
+        cell.addEventListener('mouseout', () => {
+            isMouseOver = false;
+            setTimeout(() => {
+                if (!isMouseOver) { //Only change color if mouse is still out
+                    cell.style.backgroundColor = 'white';
+                }
+            }, 1000); // 1000 milliseconds = 1 second
+        });
+
+    });
 }
